@@ -6,21 +6,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * @author Rohit Lakshykar
  */
-@JsonPropertyOrder({ "account_name", "requests" })
-public class AccountDataPojo {
+@JsonPropertyOrder({ "account_name", "hits" })
+public class AccountDataDto {
 
 	@JsonProperty("account_name")
 	String accountName;
 
-	int requests;
+	int hits;
 
 	/**
 	 * @param count
 	 * @param string
 	 */
-	public AccountDataPojo(String key, Integer count) {
+	public AccountDataDto(String key, Integer count) {
 		this.accountName = key;
-		this.requests = count;
+		this.hits = count;
 	}
 
 	public String getAccountName() {
@@ -31,12 +31,12 @@ public class AccountDataPojo {
 		this.accountName = accountName;
 	}
 
-	public int getRequests() {
-		return requests;
+	public int getHits() {
+		return hits;
 	}
 
-	public void setRequests(int requests) {
-		this.requests = requests;
+	public void setHits(int hits) {
+		this.hits = hits;
 	}
 	
 	

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.snx.snxservice.dto.AccountDataPojo;
+import com.snx.snxservice.dto.AccountDataDto;
 
 /**
  * @author Rohit Lakshykar
@@ -33,28 +33,28 @@ public class TopAccountThread implements Callable<List<Object>> {
 	@Override
 	public List<Object> call() throws Exception {
 		logger.info("Accounts size: {}", accountsMap.size());
-		List<AccountDataPojo> accountDataList = new ArrayList<>();
+		List<AccountDataDto> accountDataList = new ArrayList<>();
 		accountsMap.entrySet()
-				.forEach(entry -> accountDataList.add(new AccountDataPojo(entry.getKey(), entry.getValue())));
+				.forEach(entry -> accountDataList.add(new AccountDataDto(entry.getKey(), entry.getValue())));
 		return getTopXAccounts(accountDataList, maxAccounts);
 	}
 
-	private List<Object> getTopXAccounts(List<AccountDataPojo> dataList, int maxValues) {
+	private List<Object> getTopXAccounts(List<AccountDataDto> dataList, int maxValues) {
 
 		JSONArray accountList = new JSONArray();
 
 		Collections.sort(dataList, (o1, o2) -> {
-			return o1.getRequests() < o2.getRequests() ? 1 : o1.getRequests() > o2.getRequests() ? -1 : 0;
+			return o1.getHits() < o2.getHits() ? 1 : o1.getHits() > o2.getHits() ? -1 : 0;
 		});
 
 		int count = 0;
-		for (AccountDataPojo data : dataList) {
+		for (AccountDataDto data : dataList) {
 			if (count == maxValues)
 				break;
 			count++;
 			JSONObject obj = new JSONObject();
 			obj.put("account_name", data.getAccountName());
-			obj.put("hits", data.getRequests());
+			obj.put("hits", data.getHits());
 			accountList.put(obj);
 		}
 

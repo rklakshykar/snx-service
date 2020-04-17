@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.snx.snxservice.dto.IpDataPojo;
+import com.snx.snxservice.dto.IpDataDto;
 
 /**
  * @author Rohit Lakshykar
@@ -33,28 +33,28 @@ public class TopIpsThread implements Callable<List<Object>> {
 	@Override
 	public List<Object> call() throws Exception {
 		logger.info("Ips size: {}", ipsMap.size());
-		List<IpDataPojo> ipDataList = new ArrayList<>();
-		ipsMap.entrySet().forEach(entry -> ipDataList.add(new IpDataPojo(entry.getKey(), entry.getValue())));
+		List<IpDataDto> ipDataList = new ArrayList<>();
+		ipsMap.entrySet().forEach(entry -> ipDataList.add(new IpDataDto(entry.getKey(), entry.getValue())));
 		return getTopXIps(ipDataList, maxIps);
 	}
 
-	private List<Object> getTopXIps(List<IpDataPojo> dataList, int maxValues) {
+	private List<Object> getTopXIps(List<IpDataDto> dataList, int maxValues) {
 
 		JSONArray ipList = new JSONArray();
 		
 		Collections.sort(dataList, (o1, o2) -> {
-			return o1.getRequests() < o2.getRequests() ? 1 : o1.getRequests() > o2.getRequests() ? -1 : 0;
+			return o1.getHits() < o2.getHits() ? 1 : o1.getHits() > o2.getHits() ? -1 : 0;
 		});
 
 		int count = 0;
 
-		for (IpDataPojo data : dataList) {
+		for (IpDataDto data : dataList) {
 			if (count == maxValues)
 				break;
 			count++;
 			JSONObject obj = new JSONObject();
 			obj.put("ip", data.getIp());
-			obj.put("hits", data.getRequests());
+			obj.put("hits", data.getHits());
 			ipList.put(obj);
 		}
 

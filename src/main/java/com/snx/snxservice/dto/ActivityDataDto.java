@@ -1,26 +1,24 @@
 package com.snx.snxservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * @author Rohit Lakshykar
  */
-@JsonPropertyOrder({ "activity", "requests" })
-public class ActivityDataPojo {
+@JsonPropertyOrder({ "activity", "hits" })
+public class ActivityDataDto {
 
 	String activity;
 
-	@JsonProperty("hits")
-	int requests;
+	int hits;
 
 	/**
-	 * @param count
+	 * @param hits
 	 * @param string
 	 */
-	public ActivityDataPojo(String activity, Integer count) {
+	public ActivityDataDto(String activity, Integer hits) {
 		this.activity = activity;
-		this.requests = count;
+		this.hits = hits;
 	}
 
 	public String getActivity() {
@@ -32,11 +30,11 @@ public class ActivityDataPojo {
 	}
 
 	public int getHits() {
-		return requests;
+		return hits;
 	}
 
-	public void setRequests(int requests) {
-		this.requests = requests;
+	public void setHits(int requests) {
+		this.hits = requests;
 	}
 
 }

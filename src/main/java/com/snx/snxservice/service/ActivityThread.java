@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.snx.snxservice.dto.ActivityDataPojo;
+import com.snx.snxservice.dto.ActivityDataDto;
 
 /**
  * @author Rohit Lakshykar
@@ -38,10 +38,10 @@ public class ActivityThread implements Callable<List<Object>> {
 
 			JSONObject hourObj = new JSONObject();
 			hourObj.put("hour", String.valueOf(hour.getKey()));
-			List<ActivityDataPojo> activityList = new ArrayList<>();
+			List<ActivityDataDto> activityList = new ArrayList<>();
 
 			for (Entry<String, Integer> activity : hour.getValue().entrySet()) {
-				activityList.add(new ActivityDataPojo(activity.getKey(), activity.getValue()));
+				activityList.add(new ActivityDataDto(activity.getKey(), activity.getValue()));
 			}
 
 			Collections.sort(activityList, (o1, o2) -> {
