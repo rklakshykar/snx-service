@@ -8,11 +8,12 @@
 # How to run
 
 1. Navigate to project folder
-2. Execute command : mvn clean package
-3. Navigate to target folder
-4. Run Jar file using java -jar filename
-5. Open this url in any browser: http://localhost:8080
-6. Upload correct file 
+2. Make changes in application.yml file (Ex: multipart file location, port, maxfile size etc)
+3. Execute command : mvn clean package
+4. Navigate to target folder
+5. Run Jar file using java -jar filename
+6. Open this url in any browser: http://localhost:8080
+7. Upload correct file 
 
 ![SEE](src/main/resources/images/1.png)
 
