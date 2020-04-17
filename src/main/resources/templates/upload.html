@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Snx File Upload</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<section class="my-5">
+		<div class="container">
+			<div class="row jumbotron jumbotron-fluid">
+				<div class="col-md-8 mx-auto">
+					<h2>File upload</h2>
+					<p th:text="${message}" th:if="${message ne null}"
+						class="alert alert-primary"></p>
+					<p th:text="${errormsg}" th:if="${errormsg ne null}"
+						class="alert alert-danger"></p>
+
+					<form method="post" th:action="@{/upload}"
+						enctype="multipart/form-data">
+
+						<div class="form-group">
+							<input type="file" name="file" class="form-control-file">
+						</div>
+
+						<button type="submit" class="btn btn-primary">Upload File</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="my-5">
+		<div class="container">
+			<div th:if="${response ne null and response.status eq 0}" class="row">
+
+				<div th:if="${not #lists.isEmpty(response.data.top_ips)}"
+					class="table-responsive col-md-6">
+
+					<h4 class="font-weight-bold">Top 5 IPs</h4>
+					<table class="table table-striped">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">#</th>
+								<th>IP</th>
+								<th>Hits</th>
+							</tr>
+						</thead>
+						<tr>
+						</tr>
+						<tr th:each="data : ${response.data.top_ips}">
+							<td th:text="${dataStat.index}+1"></td>
+							<td th:text="${data.ip}"></td>
+							<td th:text="${data.hits}"></td>
+						</tr>
+					</table>
+				</div>
+
+				<div th:if="${not #lists.isEmpty(response.data.top_accounts)}"
+					class="table-responsive col-md-6">
+
+					<h4 class="font-weight-bold">Top 5 Accounts</h4>
+					<table class="table table-striped table-hover">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">#</th>
+								<th>Account Name</th>
+								<th>Hits</th>
+							</tr>
+						</thead>
+						<tr>
+						</tr>
+						<tr th:each="data : ${response.data.top_accounts}">
+							<td th:text="${dataStat.index}+1"></td>
+							<td th:text="${data.account_name}"></td>
+							<td th:text="${data.hits}"></td>
+						</tr>
+					</table>
+				</div>
+
+				<div
+					th:if="${not #lists.isEmpty(response.data.hourly_activity_list)}"
+					class="table-responsive col-md-6">
+					<h4 class="font-weight-bold">Hourly Activity</h4>
+
+					<table class="table table-striped table-hover">
+						<thead class="thead-dark">
+							<tr>
+								<th>Hour</th>
+								<th>Activity</th>
+							</tr>
+						</thead>
+						<tr th:each="data : ${response.data.hourly_activity_list}">
+							<td>[[${data.hour}]] hr</td>
+							<td>
+								<p>
+									<button class="btn btn-secondary" type="button"
+										data-toggle="collapse" data-target="#collapseExample"
+										aria-expanded="false" aria-controls="collapseExample">
+										[[${#lists.size(data.activities)}]] Activities click to
+										view/hide</button>
+								</p>
+								<div class="collapse" id="collapseExample">
+
+									<table class="table table-striped table-hover">
+										<thead class="thead-dark">
+											<tr>
+												<th>#</th>
+												<th>Description</th>
+												<th>Hits</th>
+											</tr>
+										</thead>
+
+										<tr th:each="activitydata : ${data.activities}">
+											<td th:text="${activitydataStat.index}+1"></td>
+											<td th:text="${activitydata.activity}"></td>
+											<td th:text="${activitydata.hits}"></td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+</body>
+</html>

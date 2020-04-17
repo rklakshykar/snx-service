@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "endpoints.shutdown.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoints.shutdown.enabled'"
+  },
+  {
+    "name": "spring.log.dir",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.log.dir'"
+  },
+  {
+    "name": "management.security.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'management.security.enabled'"
+  },
+  {
+    "name": "management.security.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'management.security.enabled'"
+  },
+  {
+    "name": "endpoints.shutdown.sensitive",
+    "type": "java.lang.String",
+    "description": "A description for 'endpoints.shutdown.sensitive'"
+  }
+]}
