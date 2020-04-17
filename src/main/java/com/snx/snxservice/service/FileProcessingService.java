@@ -78,7 +78,7 @@ public class FileProcessingService {
 
 		try {
 			file.transferTo(new File(fileName.toString()));
-
+			
 			try (Stream<String> lines = Files.lines(Paths.get(fileName.toString()))) {
 				lines.forEach(line -> parseAndFillMaps(formatter, ipsMap, accountsMap, hourlyActivities, line));
 			}
@@ -117,7 +117,7 @@ public class FileProcessingService {
 	}
 
 	private void parseAndFillMaps(DateTimeFormatter formatter, Map<String, Integer> ipsMap,
-			Map<String, Integer> accountsMap, Map<Integer, Map<String, Integer>> hourlyActivities, String line) {
+			Map<String, Integer> accountsMap, Map<Integer, Map<String, Integer>> hourlyActivitiesMap, String line) {
 
 		try {
 			if (line == null || "".equals(line)) {
@@ -140,8 +140,8 @@ public class FileProcessingService {
 
 			int hour = LocalDateTime.parse(lineData[11], formatter).getHour();
 
-			if (hourlyActivities.get(hour) != null) {
-				Map<String, Integer> activityMap = hourlyActivities.get(hour);
+			if (hourlyActivitiesMap.get(hour) != null) {
+				Map<String, Integer> activityMap = hourlyActivitiesMap.get(hour);
 
 				if (activityMap.get(lineData[9]) != null) {
 					activityMap.put(lineData[9], activityMap.get(lineData[9]) + 1);
@@ -149,11 +149,11 @@ public class FileProcessingService {
 					activityMap.put(lineData[9], 1);
 				}
 
-				hourlyActivities.put(hour, activityMap);
+				hourlyActivitiesMap.put(hour, activityMap);
 			} else {
 				Map<String, Integer> activityMap = new HashMap<>();
 				activityMap.put(lineData[9], 1);
-				hourlyActivities.put(hour, activityMap);
+				hourlyActivitiesMap.put(hour, activityMap);
 			}
 		} catch (Exception e) {
 			logger.error("Exception while processing line : {}", line);
