@@ -51,9 +51,16 @@ public class FileProcessingService {
 
 		logger.info("Inside processFile of {}  : filename: {}", getClass().getSimpleName(), file.getOriginalFilename());
 
-		Instant start = Instant.now();
-
 		ApiCommonResponse response = new ApiCommonResponse();
+		if (file.isEmpty()) {
+			response.setStatus(StatusConstants.FAIL.getId());
+			response.setStatusDesc(StatusConstants.FAIL.getDescription());
+			response.setMessage("file required");
+			response.setHttpCode(HttpStatus.BAD_REQUEST.value());
+			return response;
+		}
+
+		Instant start = Instant.now();
 
 		DateTimeFormatter formatter = getDateFormatter();
 
@@ -78,7 +85,7 @@ public class FileProcessingService {
 
 			responseParameters.put("unique_ips", ipsMap.size());
 			responseParameters.put("unique_accounts", accountsMap.size());
-			
+
 			Future<List<Object>> topIpsList = executorService.submit(new TopIpsThread(ipsMap, 5));
 			Future<List<Object>> topAccountList = executorService.submit(new TopAccountThread(accountsMap, 5));
 			Future<List<Object>> actilityList = executorService.submit(new ActivityThread(hourlyActivities));
@@ -103,6 +110,7 @@ public class FileProcessingService {
 			response.setStatus(StatusConstants.FAIL.getId());
 			response.setStatusDesc(StatusConstants.FAIL.getDescription());
 			response.setHttpCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.setMessage("Some error occured file processing the file, Please check the file and reupload");
 		}
 
 		return response;
@@ -148,7 +156,7 @@ public class FileProcessingService {
 				hourlyActivities.put(hour, activityMap);
 			}
 		} catch (Exception e) {
-			logger.error("Exception while processing line : {}",line);
+			logger.error("Exception while processing line : {}", line);
 		}
 	}
 
