@@ -1,15 +1,15 @@
-# Introduction
+# Tech Stack
 
-This Project is created as base project for all microservice
+1. Java 8
+2. SpringBoot
+3. thymeleaf
+4. Html, CSS, JS
 
-Functionality included 
-1. Request/Response Logging
-2. Jobs
-3. Server Log loggin
-4. DB Connect
-5. TomcatConfig
-6. Base Interface
-7. Response Building
-8. Response Structure 
+# How to run
 
-etc in short most of the things needed to start development
+1. Navigate to project folder
+2. Execute command : mvn clean package
+3. Navigate to target folder
+4. Run Jar file using java -jar filename
+5. Open this url in any browser: http://localhost:8080/snx-service/
+6. Upload correct file 
