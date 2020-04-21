@@ -1,6 +1,5 @@
 package com.snx.snxservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
@@ -9,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({ "account_name", "hits" })
 public class AccountDataDto {
 
-	@JsonProperty("account_name")
-	String accountName;
+	String account_name;
 
 	int hits;
 
@@ -19,16 +17,16 @@ public class AccountDataDto {
 	 * @param string
 	 */
 	public AccountDataDto(String key, Integer count) {
-		this.accountName = key;
+		this.account_name = key;
 		this.hits = count;
 	}
 
-	public String getAccountName() {
-		return accountName;
+	public String getAccount_name() {
+		return account_name;
 	}
 
 	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+		this.account_name = accountName;
 	}
 
 	public int getHits() {

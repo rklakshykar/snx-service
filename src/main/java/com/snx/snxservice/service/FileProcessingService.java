@@ -24,8 +24,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.snx.snxservice.dto.AccountDataDto;
 import com.snx.snxservice.dto.ApiCommonRequest;
 import com.snx.snxservice.dto.ApiCommonResponse;
+import com.snx.snxservice.dto.IpDataDto;
 import com.snx.snxservice.util.StatusConstants;
 
 /**
@@ -78,7 +80,7 @@ public class FileProcessingService {
 
 		try {
 			file.transferTo(new File(fileName.toString()));
-			
+
 			try (Stream<String> lines = Files.lines(Paths.get(fileName.toString()))) {
 				lines.forEach(line -> parseAndFillMaps(formatter, ipsMap, accountsMap, hourlyActivities, line));
 			}
@@ -86,9 +88,9 @@ public class FileProcessingService {
 			responseParameters.put("unique_ips", ipsMap.size());
 			responseParameters.put("unique_accounts", accountsMap.size());
 
-			Future<List<Object>> topIpsList = executorService.submit(new TopIpsThread(ipsMap, 5));
-			Future<List<Object>> topAccountList = executorService.submit(new TopAccountThread(accountsMap, 5));
-			Future<List<Object>> actilityList = executorService.submit(new ActivityThread(hourlyActivities));
+			Future<List<IpDataDto>> topIpsList = executorService.submit(new TopIpsThread(ipsMap, 5));
+			Future<List<AccountDataDto>> topAccountList = executorService.submit(new TopAccountThread(accountsMap, 5));
+			Future<List<Object>> actilityList = executorService.submit(new HourlyActivityThread(hourlyActivities));
 
 			responseParameters.put("top_ips", topIpsList.get());
 			responseParameters.put("top_accounts", topAccountList.get());
