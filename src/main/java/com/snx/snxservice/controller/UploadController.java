@@ -50,9 +50,6 @@ public class UploadController {
 			
 			logger.info("Responise :{}",mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response));
 			
-			/*redirectAttributes.addFlashAttribute("message",
-					"You successfully uploaded '" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(fileProcessingService.processFile(request, file)) + "'");
-			*/
 			redirectAttributes.addFlashAttribute("message",(response.getMessage()!=null?response.getMessage():response.getStatusDesc()));
 						
 			redirectAttributes.addFlashAttribute("response", response);
@@ -66,11 +63,6 @@ public class UploadController {
 		}
 
 		return "redirect:/";
-	}
-
-	@GetMapping("/uploadStatus")
-	public String uploadStatus() {
-		return "uploadStatus";
 	}
 
 }
