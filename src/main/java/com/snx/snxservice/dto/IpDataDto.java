@@ -25,18 +25,8 @@ public class IpDataDto {
 		return ip;
 	}
 
-	public void setIp(String data) {
-		this.ip = data;
-	}
-
 	public int getHits() {
 		return hits;
 	}
-
-	public void setHits(int requests) {
-		this.hits = requests;
-	}
-	
-	
 
 }

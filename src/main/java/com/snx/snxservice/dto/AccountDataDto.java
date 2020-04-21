@@ -25,18 +25,8 @@ public class AccountDataDto {
 		return account_name;
 	}
 
-	public void setAccountName(String accountName) {
-		this.account_name = accountName;
-	}
-
 	public int getHits() {
 		return hits;
-	}
-
-	public void setHits(int hits) {
-		this.hits = hits;
-	}
-	
-	
+	}	
 
 }

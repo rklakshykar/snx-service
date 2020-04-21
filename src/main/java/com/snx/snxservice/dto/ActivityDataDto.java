@@ -25,16 +25,8 @@ public class ActivityDataDto {
 		return activity;
 	}
 
-	public void setActivity(String activity) {
-		this.activity = activity;
-	}
-
 	public int getHits() {
 		return hits;
-	}
-
-	public void setHits(int requests) {
-		this.hits = requests;
 	}
 
 }

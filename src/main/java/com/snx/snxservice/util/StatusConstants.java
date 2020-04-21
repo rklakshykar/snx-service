@@ -26,13 +26,6 @@ public enum StatusConstants {
 	}
 
 	/**
-	 * @param id the id to set
-	 */
-	void setId(int id) {
-		this.id = id;
-	}
-
-	/**
 	 * @return the description
 	 */
 	public String getDescription() {

@@ -58,8 +58,8 @@ class ApiRequestControllerTest {
 	}
 
 	@Test
-	@DisplayName("File upload Rest API test /api/v1/fileupload")
-	public void testAddEmployeeSuccess() throws URISyntaxException {
+	@DisplayName("Success: Rest API test /api/v1/fileupload")
+	public void testFileUploadAPISuccess() throws URISyntaxException {
 		LinkedMultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		parameters.add("file", new org.springframework.core.io.ClassPathResource("testfile.csv"));
 
